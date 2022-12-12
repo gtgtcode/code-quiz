@@ -6,12 +6,43 @@
     background-color: aqua;
 }
 
+.progress {
+    margin-bottom: 0px;
+}
+
 #progress-container {
     max-width: 800px;
     padding: 20px;
     margin-top: 20px;
+    padding-bottom: 75px;
     background-color: white;
     border-radius: 20px;
+}
+
+#scoring-bar-container {
+
+}
+
+#score-container {
+    display: inline;
+    float: left;
+    padding: 20px;
+    margin: 5px;
+    border-radius: 20px;
+    background-color: gray;
+}
+
+#question-count-container {
+    display: inline;
+    float: right;
+    padding: 20px;
+    margin: 5px;
+    border-radius: 20px;
+    background-color: gray;
+}
+
+#question-count-container div {
+    display: inline;
 }
 
 #quiz-container {
