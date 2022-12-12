@@ -1,44 +1,76 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap');
+
+body {
+    background: linear-gradient(271deg, #553eb6, #1e689b, #1e9b91, #186966);
+    background-size: 800% 800%;
+    height: 100vh;
+
+    -webkit-animation: BackgroundGradient 25s ease infinite;
+    -moz-animation: BackgroundGradient 25s ease infinite;
+    -o-animation: BackgroundGradient 25s ease infinite;
+    animation: BackgroundGradient 25s ease infinite;
+
+    @import url('https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap');
+}
+
+@-webkit-keyframes BackgroundGradient {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+@-moz-keyframes BackgroundGradient {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+@-o-keyframes BackgroundGradient {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+@keyframes BackgroundGradient {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+
 #game-container {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: aqua;
+    max-width: 800px;
 }
 
-.progress {
-    margin-bottom: 0px;
+.progress-bar {
+    border-radius: 20px;
 }
 
 #progress-container {
     max-width: 800px;
     padding: 20px;
     margin-top: 20px;
-    padding-bottom: 75px;
-    background-color: white;
+    padding-bottom: 55px;
+    background-color: rgba(255,255,255,0.5);
     border-radius: 20px;
 }
 
-#scoring-bar-container {
-
-}
-
-#score-container {
+#score-container, #leaderboard-icon {
     display: inline;
     float: left;
-    padding: 20px;
+    padding: 10px;
     margin: 5px;
     border-radius: 20px;
-    background-color: gray;
+    background-color: rgba(255,255,255,0.5);
 }
 
 #question-count-container {
     display: inline;
     float: right;
-    padding: 20px;
+    padding: 10px;
     margin: 5px;
     border-radius: 20px;
-    background-color: gray;
+    background-color: rgba(255,255,255,0.5);
 }
 
 #question-count-container div {
@@ -51,6 +83,6 @@
     margin-top: 20px;
     margin-bottom: 20px;
     padding: 20px;
-    background-color: white;
+    background-color: rgba(255,255,255,0.5);
     border-radius: 20px;
 }
