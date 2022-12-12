@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap');
 
+:root {
+    --progress-percentage: 25%;
+}
+
 body {
     background: linear-gradient(271deg, #553eb6, #1e689b, #1e9b91, #186966);
     background-size: 800% 800%;
@@ -9,8 +13,6 @@ body {
     -moz-animation: BackgroundGradient 25s ease infinite;
     -o-animation: BackgroundGradient 25s ease infinite;
     animation: BackgroundGradient 25s ease infinite;
-
-    @import url('https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap');
 }
 
 @-webkit-keyframes BackgroundGradient {
@@ -55,8 +57,48 @@ body {
     max-width: 800px;
 }
 
+#progress-percentage {
+    position: absolute;
+    top: -60px;
+    left: var(--progress-percentage);
+    transform: translateX(calc(-1 * var(--progress-percentage)));
+    background-color: rgba(255,255,255,0.5);
+    border-radius: 20px;
+    padding: 10px;
+    margin-left: -5px;
+}
+
 .progress-bar {
     border-radius: 20px;
+    background: linear-gradient(90deg, rgba(255,0,0,1) 0%, rgba(255,154,0,1) 10%, rgba(208,222,33,1) 20%, rgba(79,220,74,1) 30%, rgba(63,218,216,1) 40%, rgba(47,201,226,1) 50%, rgba(28,127,238,1) 60%, rgba(95,21,242,1) 70%, rgba(186,12,248,1) 80%, rgba(251,7,217,1) 90%, rgba(255,0,0,1) 100%) 
+   0 0/100% 200%;
+    background-size: 400% 400%;
+    -webkit-animation: ProgressBarGrad 5s ease infinite linear;
+    -moz-animation: ProgressBarGrad 5s ease infinite;
+    -o-animation: ProgressBarGrad 5s ease infinite;
+    animation: ProgressBarGrad 5s infinite linear;
+}
+
+@-webkit-keyframes ProgressBarGrad {
+    to {
+        background-position: 400% 0%;
+    }
+}
+
+@-moz-keyframes ProgressBarGrad {
+    to {
+        background-position: 400% 0%;
+    }
+}
+@-o-keyframes ProgressBarGrad {
+    to {
+        background-position: 400% 0%;
+    }
+}
+@keyframes ProgressBarGrad {
+    to {
+        background-position: 400% 0%;
+    }
 }
 
 #progress-container {
@@ -77,11 +119,11 @@ body {
     opacity: 0;
     position: absolute;
     left: 50%;
-    transform: translate(-50%, 20%);
+    transform: translate(-50%, -60%);
     background-color: rgba(255,255,255,0.8);
     padding: 8px;
     border-radius: 20px;
-    transition: 0.2s opacity;
+    transition: 0.2s opacity, 0.2s transform;
     pointer-events: none;
 }
 
@@ -90,11 +132,7 @@ body {
 }
 
 #info-hover {
-    transform: translate(-50%, -180%) !important;
-}
-
-#github-hover {
-    transform: translate(-50%, -160%) !important;
+    margin-top: -10px;
 }
 
 #github-button div {
@@ -108,6 +146,7 @@ body {
 #question-button:hover #question-hover,
 #info-button:hover #info-hover,
 #github-button:hover #github-hover {
+    transform: translate(-50%, 20%) !important;
     opacity: 1;
 }
 

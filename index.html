@@ -36,9 +36,10 @@
 </head>
 <body>
     <section class="container-fluid sm-w-100 lg-w-75" id="game-container">
-        <section class="container" id="progress-container">
-            <div class="progress">
-                <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+        <section class="container" id="progress-container" style="position: relative;">
+            <div id="progress-percentage">25%</div>
+            <div class="progress" style="border-radius: 20px;">
+                <div class="progress-bar" role="progressbar" style="width:var(--progress-percentage)" aria-valuenow="75%" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
             <div id="scoring-bar-container">
                 <button id="timer-button" style="position: relative;">
