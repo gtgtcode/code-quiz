@@ -41,15 +41,53 @@
                 <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
             <div id="scoring-bar-container">
-                <div id="score-container">000</div>
-                <span class="material-symbols-outlined" id="leaderboard-icon">
-                    bar_chart
+                <button id="timer-button" style="position: relative;">
+                    <span 
+                        class="material-symbols-outlined"
+                        style="
+                            position: relative;
+                            top: 2px;
+                            display: inline;"
+                    >
+                        timer
                     </span>
-                <div id="question-count-container">
-                    <div id="questions-answered">0</div>
-                    <div>/</div>
-                    <div id="question-total">10</div>
-                </div>
+                    <div
+                        id="timer-display"
+                        style="
+                            display: inline;
+                            position: relative;
+                            top: -3px;"
+                    >
+                        0
+                    </div>
+                    <div id="timer-hover" class="hover-icon">
+                        Timer
+                    </div>
+                </button>
+                <button id="leaderboard-button" style="position: relative;">
+                    <span class="material-symbols-outlined" id="leaderboard-icon" style="transform: translate(0,10%);">
+                        bar_chart
+                    </span>
+                    <div id="leaderboard-hover" class="hover-icon">
+                        Leaderboard
+                     </div>
+                </button>
+                <button id="score-button" style="position: relative;">
+                    <div id="score-container">000</div>
+                    <div id="score-hover" class="hover-icon">
+                        Score
+                     </div>
+                </button>
+                <button id="question-button" style="position: relative;">
+                    <div id="question-count-container">
+                        <div id="questions-answered">0</div>
+                        <div>/</div>
+                        <div id="question-total">10</div>
+                    </div>
+                    <div id="question-hover" class="hover-icon">
+                        Questions
+                    </div>
+            </button>
             </div>
         </section>
         <section class="container" id="quiz-container">
@@ -59,23 +97,44 @@
             </div>
             <div id="quiz-content"></div>
             <div id="quiz-container-footer">
-                <img src="./assets/images/GitHub-Mark-32px.png"
-                style="
+                    <a
+                    href="https://github.com/gtgtcode"
+                    id="github-button"
+                    style="
                         position: absolute;
                         bottom: 38px;
                         right: 80px;
-                        height: 20px;"
-                >
-                <span
-                    class="material-symbols-outlined"
+                        padding: 0;
+                        margin: 0;
+                        "
+                    >
+                        <img
+                            src="./assets/images/GitHub-Mark-32px.png"
+                            style="
+                                height: 20px;"
+                        >
+                        <div id="github-hover" class="hover-icon">
+                            GitHub
+                        </div>
+                </a>
+                <button
+                    id="info-button"
                     style="
                         position: absolute;
                         bottom: 40px;
                         right: 40px;
-                        height: 20px;"
+                        height: 20px;
+                        padding: 0;
+                        border: none;
+                        background: none;"
                 >
+                <span class="material-symbols-outlined">
                     info
                 </span>
+                <div id="info-hover" class="hover-icon">
+                    Info
+                </div>
+            </button>
             </div>
         </section>
     </section>

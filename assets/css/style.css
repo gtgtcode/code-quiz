@@ -34,6 +34,19 @@ body {
     100%{background-position:0% 50%}
 }
 
+#progress-container button {
+    display: inline;
+    border: none;
+    float: left;
+    padding: 2px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin: 5px;
+    border-radius: 20px;
+    background-color: rgba(255,255,255,0.5);
+    height: 40px;
+}
+
 #game-container {
     position: absolute;
     top: 50%;
@@ -55,23 +68,49 @@ body {
     border-radius: 20px;
 }
 
-#score-container, #leaderboard-icon {
-    display: inline;
-    float: left;
-    padding: 10px;
-    margin: 5px;
-    border-radius: 20px;
-    background-color: rgba(255,255,255,0.5);
+
+#question-button {
+    float: right !important;
 }
 
-#question-count-container {
-    display: inline;
-    float: right;
-    padding: 10px;
-    margin: 5px;
+.hover-icon {
+    opacity: 0;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 20%);
+    background-color: rgba(255,255,255,0.8);
+    padding: 8px;
     border-radius: 20px;
-    background-color: rgba(255,255,255,0.5);
+    transition: 0.2s opacity;
+    pointer-events: none;
 }
+
+#score-hover, #question-hover {
+    margin-top: 3px;
+}
+
+#info-hover {
+    transform: translate(-50%, -180%) !important;
+}
+
+#github-hover {
+    transform: translate(-50%, -160%) !important;
+}
+
+#github-button div {
+    text-decoration: none;
+    color: black;
+}
+
+#timer-button:hover #timer-hover,
+#leaderboard-button:hover #leaderboard-hover,
+#score-button:hover #score-hover,
+#question-button:hover #question-hover,
+#info-button:hover #info-hover,
+#github-button:hover #github-hover {
+    opacity: 1;
+}
+
 
 #question-count-container div {
     display: inline;
