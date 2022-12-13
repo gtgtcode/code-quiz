@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap');
 
 :root {
-    --progress-percentage: 75%;
+    --progress-percentage: 0%;
 }
 
 body {
@@ -61,6 +61,7 @@ body {
     position: absolute;
     top: -60px;
     left: var(--progress-percentage);
+    transition: 0.5s left ease-in-out;
     transform: translateX(calc(-1 * var(--progress-percentage)));
     background-color: rgba(255,255,255,0.5);
     border-radius: 20px;
