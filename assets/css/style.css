@@ -5,6 +5,7 @@
 }
 
 body {
+    
     background: linear-gradient(271deg, #553eb6, #1e689b, #1e9b91, #186966);
     background-size: 800% 800%;
     height: 100vh;
@@ -14,6 +15,22 @@ body {
     -o-animation: BackgroundGradient 25s ease infinite;
     animation: BackgroundGradient 25s ease infinite;
 }
+
+#multiplier-background {
+    background: linear-gradient(-45deg, #ee7752, #e73c7e);
+    background-size: 800% 800%;
+    height: 100vh;
+    opacity: 0;
+
+    transition: 1s opacity;
+
+    -webkit-animation: BackgroundGradient 25s ease infinite;
+    -moz-animation: BackgroundGradient 25s ease infinite;
+    -o-animation: BackgroundGradient 25s ease infinite;
+    animation: BackgroundGradient 25s ease infinite;
+}
+
+
 
 @-webkit-keyframes BackgroundGradient {
     0%{background-position:0% 50%}
@@ -55,6 +72,7 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     max-width: 800px;
+    font-family: 'Fira Sans', sans-serif;
 }
 
 #progress-percentage {

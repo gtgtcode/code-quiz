@@ -35,6 +35,7 @@
     <title>Coding Quiz</title>
 </head>
 <body>
+    <section id="multiplier-background"></section>
     <section class="container-fluid sm-w-100 lg-w-75" id="game-container">
         <section class="container" id="progress-container" style="position: relative;">
             <div id="progress-percentage"></div>
@@ -94,7 +95,7 @@
         <section class="container" id="quiz-container">
             <div id="title-screen">
                 <h1 class="text-center">Coding Quiz</h1>
-                <p class="text-center mt-5">Think you've got what it takes to be a master programmer? Take this quiz to find out!</p>
+                <p class="text-center mt-5" id="title-paragraph">Think you've got what it takes to be a master programmer? Take this quiz to find out!</p>
                 <button onclick="changePercentage(-.01)">-1</button>
                 <button onclick="changePercentage(.01)">+1</button>
                 <button onclick="changePercentage(-.40)">-40%</button>
