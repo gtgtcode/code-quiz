@@ -5,7 +5,6 @@
 }
 
 body {
-    
     background: linear-gradient(271deg, #553eb6, #1e689b, #1e9b91, #186966);
     background-size: 800% 800%;
     height: 100vh;
@@ -73,13 +72,14 @@ body {
     transform: translate(-50%, -50%);
     max-width: 800px;
     font-family: 'Fira Sans', sans-serif;
+    color: black;
 }
 
 #progress-percentage {
     position: absolute;
     top: -60px;
     left: var(--progress-percentage);
-    transition: 0.5s left ease-in-out;
+    transition: 0.5s left ease;
     transform: translateX(calc(-1 * var(--progress-percentage)));
     background-color: rgba(255,255,255,0.5);
     border-radius: 20px;
@@ -118,6 +118,10 @@ body {
     to {
         background-position: 400% 0%;
     }
+}
+
+#scoring-bar-container {
+    color: black;
 }
 
 #progress-container {

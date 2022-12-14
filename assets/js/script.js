@@ -2,6 +2,8 @@
 
 //Variable Initializion
 
+let progDrainCount = 1;
+let multiplierOn = false;
 let progressNumber = document.getElementById("progress-percentage");
 let rootCSS = document.querySelector(':root');
 let multBackgroundLocation = document.getElementById("multiplier-background");
@@ -15,6 +17,15 @@ let outputPercent = percentToNum.toLocaleString("en", {style: "percent"});
 rootCSS.style.setProperty('--progress-percentage', outputPercent);
 
 progressNumber.innerHTML = outputPercent;
+
+var wait = (ms) => {
+    const start = Date.now();
+    let now = start;
+    while (now - start < ms) {
+      now = Date.now();
+    }
+}
+
 
 function changePercentage(number) {
     percentToNum += number;
@@ -35,17 +46,76 @@ function changePercentage(number) {
 
     if (percentToNum <= 0) {
         multBackgroundLocation.style.opacity = "0";
+        multiplierOn = false;
     }
     
     if (percentToNum >= 1) {
         multBackgroundLocation.style.opacity = "1";
+        progDrainLoop()
     }
 
     outputPercent = percentToNum.toLocaleString("en", {style: "percent"});
     rootCSS.style.setProperty('--progress-percentage', outputPercent);
 
     progressNumber.innerHTML = outputPercent;
+}
+
+function setPercentage(number) {
+    percentToNum = number;
+    outputPercent = percentToNum.toLocaleString("en", {style: "percent"});
+    rootCSS.style.setProperty('--progress-percentage', outputPercent);
+
+    if (percentToNum <= 0) {
+        multBackgroundLocation.style.opacity = "0";
+    }
     
+    if (percentToNum >= 1) {
+        multBackgroundLocation.style.opacity = "1";
+        setTimeout(3000)
+        progDrainLoop()
+    }
+
+    progressNumber.innerHTML = outputPercent;
+}
+
+function progDrainLoop() {
+
+    if (percentToNum >= 1) {
+        progDrainCount = 1;
+    }
+
+    setTimeout(function() {
+        if (percentToNum < 1) {
+            console.log(progDrainCount)
+            progDrainCount = Math.floor((progDrainCount - 0.01) * 100) / 100;
+            percentToNum = progDrainCount;
+            if (percentToNum == -0.01) {
+                percentToNum = 0;
+            }
+        }
+
+        if (percentToNum == 1) {
+            setTimeout(function() {
+                console.log(progDrainCount)
+                progDrainCount = Math.floor((progDrainCount - 0.01) * 100) / 100;
+                percentToNum = progDrainCount;
+                if (percentToNum == -0.01) {
+                    percentToNum = 0;
+                }
+            }, 600)
+        }
+
+        outputPercent = percentToNum.toLocaleString("en", {style: "percent"});
+        rootCSS.style.setProperty('--progress-percentage', outputPercent);
+        progressNumber.innerHTML = outputPercent;
+
+        if (progDrainCount >= 0) {
+            progDrainLoop();
+        } else {
+            progDrainCount = 0;
+            multBackgroundLocation.style.opacity = "0";
+        }
+    }, 100)
 }
 
 // Game Questions
