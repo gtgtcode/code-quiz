@@ -2,6 +2,10 @@
 
 //Variable Initializion
 
+let gameScore = 0;
+let titleParagraph = document.getElementById("title-paragraph");
+let currentQuestion = 0;
+let randomizedQuestions = [];
 let gameMultiplier = 1;
 let displayMultiplier = gameMultiplier + "x";
 let nextMultiplier = 2;
@@ -11,6 +15,11 @@ let multiplierOn = false;
 let progressNumber = document.getElementById("progress-percentage");
 let rootCSS = document.querySelector(':root');
 let multBackgroundLocation = document.getElementById("multiplier-background");
+let answerLocation1 = document.getElementById("option-1");
+let answerLocation2 = document.getElementById("option-2");
+let answerLocation3 = document.getElementById("option-3");
+let answerLocation4 = document.getElementById("option-4");
+
 multBackgroundLocation.style.background =  "linear-gradient(-45deg, #ee7752, #e73c7e)";
 multBackgroundLocation.style.opacity = "0";
 
@@ -138,6 +147,14 @@ function progDrainLoop() {
     }, 100)
 }
 
+function resetMultiplier() {
+    nextMultiplier = 1;
+}
+
+function gameStart() {
+
+}
+
 // Game Questions
 
 // Variable Initialization
@@ -182,10 +199,37 @@ let questions = [
     
 ]
  
+function questionShuffle() {
+    randomizedQuestions = questions.sort(function(){return 0.5 - Math.random()});
+    randomizedAnswers = questions[currentQuestion][1].sort(function(){return 0.5 - Math.random()});
+    console.log(randomizedQuestions);
+    titleParagraph.innerHTML = randomizedQuestions[currentQuestion][0];
+}
 
+function nextQuestion() {
+        currentQuestion += 1;
+        randomizedAnswers = questions[currentQuestion][1].sort(function(){return 0.5 - Math.random()});
+        titleParagraph.innerHTML = randomizedQuestions[currentQuestion][0];
+        answerLocation1.innerHTML = "A. " + questions[currentQuestion][1][0][0];
+        answerLocation2.innerHTML = "B. " + questions[currentQuestion][1][1][0];
+        answerLocation3.innerHTML = "C. " + questions[currentQuestion][1][2][0];
+        answerLocation4.innerHTML = "D. " + questions[currentQuestion][1][3][0];
+}
 
-let titleParagraph = document.getElementById("title-paragraph");
-titleParagraph.innerHTML = questions[1][0];
+function answerSelected(number) {
+    selectedAnswer = questions[currentQuestion][1][number];
+    if (selectedAnswer[1] === "correct") {
+        changePercentage(.20);
+        nextQuestion();
+    }
+}
+
+questionShuffle();
+
+answerLocation1.innerHTML = "A. " + questions[currentQuestion][1][0][0];
+answerLocation2.innerHTML = "B. " + questions[currentQuestion][1][1][0];
+answerLocation3.innerHTML = "C. " + questions[currentQuestion][1][2][0];
+answerLocation4.innerHTML = "D. " + questions[currentQuestion][1][3][0];
 
 console.log(outputPercent);
 

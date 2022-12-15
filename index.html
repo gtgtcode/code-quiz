@@ -100,15 +100,20 @@
         </section>
         <section class="container" id="quiz-container">
             <div id="title-screen">
-                <h1 class="text-center">Coding Quiz</h1>
+                <h1 class="text-center" id="quiz-header">Coding Quiz</h1>
+            </div>
+            <div id="quiz-content">
                 <p class="text-center mt-5" id="title-paragraph">Think you've got what it takes to be a master programmer? Take this quiz to find out!</p>
-                <button onclick="changePercentage(-.01)">-1</button>
+                <button onclick="resetMultiplier()">Reset Multiplier</button>
                 <button onclick="changePercentage(.01)">+1</button>
                 <button onclick="changePercentage(-.40)">-40%</button>
                 <button onclick="changePercentage(.40)">+40%</button>
                 <button onclick="setPercentage(1)">100%</button>
+                <button class="answer-option" id="option-1" onclick="answerSelected(0)"></button>
+                <button class="answer-option" id="option-2" onclick="answerSelected(1)"></button>
+                <button class="answer-option" id="option-3" onclick="answerSelected(2)"></button>
+                <button class="answer-option" id="option-4" onclick="answerSelected(3)"></button>
             </div>
-            <div id="quiz-content"></div>
             <div id="quiz-container-footer">
                     <a
                     href="https://github.com/gtgtcode"

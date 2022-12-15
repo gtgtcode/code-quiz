@@ -150,6 +150,16 @@ body {
     pointer-events: none;
 }
 
+.answer-option {
+    display: block;
+    border: none;
+    margin-top: 20px;
+    text-align: left;
+    padding: 10px;
+    border-radius: 20px;
+    background-color: rgba(255,255,255,0.7);
+}
+
 #score-hover, #question-hover, #multiplier-hover {
     margin-top: 3px;
 }
@@ -181,7 +191,6 @@ body {
 
 #quiz-container {
     max-width: 800px;
-    height: 400px;
     margin-top: 20px;
     margin-bottom: 20px;
     padding: 20px;
