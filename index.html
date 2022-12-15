@@ -40,7 +40,7 @@
         <section class="container" id="progress-container" style="position: relative;">
             <div id="progress-percentage"></div>
             <div class="progress" style="border-radius: 20px;">
-                <div class="progress-bar" role="progressbar" style="width:var(--progress-percentage)" aria-valuenow="--progress-percentage" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress-bar" id="colored-bar" role="progressbar" style="width:var(--progress-percentage)" aria-valuenow="--progress-percentage" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
             <div id="scoring-bar-container">
                 <button id="timer-button" style="position: relative;">
@@ -55,6 +55,7 @@
                     </span>
                     <div
                         id="timer-display"
+                        aria-label="timer"
                         style="
                             display: inline;
                             position: relative;

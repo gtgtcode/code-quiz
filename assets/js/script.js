@@ -2,7 +2,10 @@
 
 //Variable Initializion
 
+let gameTime = 0;
+let timerLocation = document.getElementById("timer-display");
 let gameScore = 0;
+let scoreLocation = document.getElementById("score-container");
 let titleParagraph = document.getElementById("title-paragraph");
 let currentQuestion = 0;
 let randomizedQuestions = [];
@@ -15,6 +18,7 @@ let multiplierOn = false;
 let progressNumber = document.getElementById("progress-percentage");
 let rootCSS = document.querySelector(':root');
 let multBackgroundLocation = document.getElementById("multiplier-background");
+let progressBarStyle = document.getElementById("colored-bar").style.background;
 let answerLocation1 = document.getElementById("option-1");
 let answerLocation2 = document.getElementById("option-2");
 let answerLocation3 = document.getElementById("option-3");
@@ -23,7 +27,7 @@ let answerLocation4 = document.getElementById("option-4");
 multBackgroundLocation.style.background =  "linear-gradient(-45deg, #ee7752, #e73c7e)";
 multBackgroundLocation.style.opacity = "0";
 
-console.log(displayMultiplier);
+console.log(progressBarStyle);
 
 let appendNumber = getComputedStyle(document.documentElement).getPropertyValue("--progress-percentage");
 let percentToNum = parseFloat(appendNumber) / 100.0;
@@ -41,7 +45,6 @@ var wait = (ms) => {
       now = Date.now();
     }
 }
-
 
 function changePercentage(number) {
     percentToNum += number;
@@ -62,11 +65,13 @@ function changePercentage(number) {
 
     if (percentToNum <= 0) {
         multBackgroundLocation.style.opacity = "0";
+        console.log(progressBarStyle);
         gameMultiplier = 1;
     }
     
     if (percentToNum >= 1) {
         multBackgroundLocation.style.opacity = "1";
+        console.log(progressBarStyle);
         setTimeout(3000)
         gameMultiplier = nextMultiplier;
         nextMultiplier += 1;
@@ -148,11 +153,20 @@ function progDrainLoop() {
 }
 
 function resetMultiplier() {
-    nextMultiplier = 1;
+    nextMultiplier = 2;
 }
 
 function gameStart() {
+    currentQuestion = 0;
+    gameScore = 0;
+    scoreLocation.innerHTML = gameScore;
+    gameTime = 300;
+    timerLocation.innerHTML = gameTime;
 
+    setPercentage(0);
+    resetMultiplier();
+    questionShuffle();
+    startTimer();
 }
 
 // Game Questions
@@ -207,7 +221,12 @@ function questionShuffle() {
 }
 
 function nextQuestion() {
+        if (multBackgroundLocation.style.opacity == "0") {
+            changePercentage(.40);
+        }
         currentQuestion += 1;
+        gameScore += (300 * gameMultiplier);
+        scoreLocation.innerHTML = gameScore;
         randomizedAnswers = questions[currentQuestion][1].sort(function(){return 0.5 - Math.random()});
         titleParagraph.innerHTML = randomizedQuestions[currentQuestion][0];
         answerLocation1.innerHTML = "A. " + questions[currentQuestion][1][0][0];
@@ -219,12 +238,23 @@ function nextQuestion() {
 function answerSelected(number) {
     selectedAnswer = questions[currentQuestion][1][number];
     if (selectedAnswer[1] === "correct") {
-        changePercentage(.20);
         nextQuestion();
     }
 }
 
+function startTimer() {
+        gameTime = gameTime - 1;
+        timerLocation.innerHTML = gameTime;
+        setTimeout(1000);
+
+        if (gameTime > 0) {
+            startTimer();
+        }
+}
+
 questionShuffle();
+
+gameStart();
 
 answerLocation1.innerHTML = "A. " + questions[currentQuestion][1][0][0];
 answerLocation2.innerHTML = "B. " + questions[currentQuestion][1][1][0];
