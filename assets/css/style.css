@@ -150,7 +150,7 @@ body {
     pointer-events: none;
 }
 
-#score-hover, #question-hover {
+#score-hover, #question-hover, #multiplier-hover {
     margin-top: 3px;
 }
 
@@ -168,7 +168,8 @@ body {
 #score-button:hover #score-hover,
 #question-button:hover #question-hover,
 #info-button:hover #info-hover,
-#github-button:hover #github-hover {
+#github-button:hover #github-hover,
+#multiplier-button:hover #multiplier-hover {
     transform: translate(-50%, 20%) !important;
     opacity: 1;
 }

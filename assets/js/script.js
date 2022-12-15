@@ -2,6 +2,10 @@
 
 //Variable Initializion
 
+let gameMultiplier = 1;
+let displayMultiplier = gameMultiplier + "x";
+let nextMultiplier = 2;
+let multiplierLocation = document.getElementById("multiplier-container");
 let progDrainCount = 1;
 let multiplierOn = false;
 let progressNumber = document.getElementById("progress-percentage");
@@ -10,6 +14,8 @@ let multBackgroundLocation = document.getElementById("multiplier-background");
 multBackgroundLocation.style.background =  "linear-gradient(-45deg, #ee7752, #e73c7e)";
 multBackgroundLocation.style.opacity = "0";
 
+console.log(displayMultiplier);
+
 let appendNumber = getComputedStyle(document.documentElement).getPropertyValue("--progress-percentage");
 let percentToNum = parseFloat(appendNumber) / 100.0;
 let outputPercent = percentToNum.toLocaleString("en", {style: "percent"});
@@ -17,6 +23,7 @@ let outputPercent = percentToNum.toLocaleString("en", {style: "percent"});
 rootCSS.style.setProperty('--progress-percentage', outputPercent);
 
 progressNumber.innerHTML = outputPercent;
+multiplierLocation.innerHTML = displayMultiplier;
 
 var wait = (ms) => {
     const start = Date.now();
@@ -46,11 +53,16 @@ function changePercentage(number) {
 
     if (percentToNum <= 0) {
         multBackgroundLocation.style.opacity = "0";
-        multiplierOn = false;
+        gameMultiplier = 1;
     }
     
     if (percentToNum >= 1) {
         multBackgroundLocation.style.opacity = "1";
+        setTimeout(3000)
+        gameMultiplier = nextMultiplier;
+        nextMultiplier += 1;
+        displayMultiplier = gameMultiplier + "x";
+        multiplierLocation.innerHTML = displayMultiplier;
         progDrainLoop()
     }
 
@@ -72,6 +84,11 @@ function setPercentage(number) {
     if (percentToNum >= 1) {
         multBackgroundLocation.style.opacity = "1";
         setTimeout(3000)
+        gameMultiplier = nextMultiplier;
+        nextMultiplier += 1;
+        displayMultiplier = gameMultiplier + "x";
+        multiplierLocation.innerHTML = displayMultiplier;
+        console.log(displayMultiplier);
         progDrainLoop()
     }
 
@@ -114,6 +131,9 @@ function progDrainLoop() {
         } else {
             progDrainCount = 0;
             multBackgroundLocation.style.opacity = "0";
+            gameMultiplier = 1;
+            displayMultiplier = gameMultiplier + "x";
+            multiplierLocation.innerHTML = displayMultiplier;
         }
     }, 100)
 }
