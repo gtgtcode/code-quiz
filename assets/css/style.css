@@ -29,6 +29,17 @@ body {
     animation: BackgroundGradient 25s ease infinite;
 }
 
+#incorrect-background {
+    position: absolute;
+    top: 0;
+    background-color: rgba(255,0,0,0.8);
+    background-size: 800% 800%;
+    opacity: 0;
+    height: 100vh;
+    width: 100vw;
+    transition: opacity 0.1s ease-out;
+}
+
 
 
 @-webkit-keyframes BackgroundGradient {
@@ -87,13 +98,30 @@ body {
     margin-left: -5px;
 }
 
-.progress-bar {
+#colored-bar {
     border-radius: 20px;
-    background-size: 400% 400%;
-    -webkit-animation: ProgressBarGrad 5s ease infinite linear;
+    background: linear-gradient(270deg, rgba(255,188,0,1) 20%, rgba(255,0,0,1) 94%);
+    background-size: 200% 200%;
+    -webkit-animation: ProgressBarGrad 5s ease infinite;
     -moz-animation: ProgressBarGrad 5s ease infinite;
     -o-animation: ProgressBarGrad 5s ease infinite;
-    animation: ProgressBarGrad 5s infinite linear;
+    animation: ProgressBarGrad 5s  ease infinite;
+}
+
+#rainbow-bar {
+    display: none;
+    opacity: 0;
+    border-radius: 20px;
+    background: linear-gradient(90deg, rgba(255,0,0,1) 0%, rgba(255,154,0,1) 10%, rgba(208,222,33,1) 20%, rgba(79,220,74,1) 30%, rgba(63,218,216,1) 40%, rgba(47,201,226,1) 50%, rgba(28,127,238,1) 60%, rgba(95,21,242,1) 70%, rgba(186,12,248,1) 80%, rgba(251,7,217,1) 90%, rgba(255,0,0,1) 100% 
+    );
+    background-size: 400% 400%;
+
+    transition: width 0.5s;
+
+    -webkit-animation: ProgressBarRainbow 5s infinite linear;
+    -moz-animation: ProgressBarGradRainbow 5s infinite linear;
+    -o-animation: ProgressBarGradRainbow 5s infinite linear;
+    animation: ProgressBarGradRainbow 5s infinite linear;
 }
 
 @-webkit-keyframes ProgressBarGrad {
@@ -113,10 +141,41 @@ body {
     }
 }
 @keyframes ProgressBarGrad {
+    0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+@-webkit-keyframes ProgressBarGradRainbow {
     to {
         background-position: 400% 0%;
     }
 }
+
+@-moz-keyframes ProgressBarGradRainbow {
+    to {
+        background-position: 400% 0%;
+    }
+}
+@-o-keyframes ProgressBarGradRainbow {
+    to {
+        background-position: 400% 0%;
+    }
+}
+
+@keyframes ProgressBarGradRainbow {
+    to {
+        background-position: 400% 0%;
+    }
+}
+
+
 
 #scoring-bar-container {
     color: black;

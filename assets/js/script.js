@@ -7,9 +7,12 @@ let timerLocation = document.getElementById("timer-display");
 let gameScore = 0;
 let scoreLocation = document.getElementById("score-container");
 let titleParagraph = document.getElementById("title-paragraph");
+let incorrectBackground = document.getElementById("incorrect-background");
 let currentQuestion = 0;
 let randomizedQuestions = [];
 let gameMultiplier = 1;
+let scoreTimeDrain = 0;
+let scoreTimeDrainCounter = 500;
 let displayMultiplier = gameMultiplier + "x";
 let nextMultiplier = 2;
 let multiplierLocation = document.getElementById("multiplier-container");
@@ -18,7 +21,8 @@ let multiplierOn = false;
 let progressNumber = document.getElementById("progress-percentage");
 let rootCSS = document.querySelector(':root');
 let multBackgroundLocation = document.getElementById("multiplier-background");
-let progressBarStyle = document.getElementById("colored-bar").style.background;
+let progressBarStyle = document.getElementById("colored-bar").style;
+let rainbowBarStyle = document.getElementById("rainbow-bar").style;
 let answerLocation1 = document.getElementById("option-1");
 let answerLocation2 = document.getElementById("option-2");
 let answerLocation3 = document.getElementById("option-3");
@@ -65,12 +69,20 @@ function changePercentage(number) {
 
     if (percentToNum <= 0) {
         multBackgroundLocation.style.opacity = "0";
+        progressBarStyle.display = "block";
+        progressBarStyle.opacity = 1;
+        rainbowBarStyle.display = "none";
+        rainbowBarStyle.opacity = 0; 
         console.log(progressBarStyle);
         gameMultiplier = 1;
     }
     
     if (percentToNum >= 1) {
         multBackgroundLocation.style.opacity = "1";
+        progressBarStyle.display = "none";
+        progressBarStyle.opacity = 0;
+        rainbowBarStyle.display = "block";
+        rainbowBarStyle.opacity = 1;
         console.log(progressBarStyle);
         setTimeout(3000)
         gameMultiplier = nextMultiplier;
@@ -145,6 +157,10 @@ function progDrainLoop() {
         } else {
             progDrainCount = 0;
             multBackgroundLocation.style.opacity = "0";
+            progressBarStyle.display = "block";
+            progressBarStyle.opacity = 1;
+            rainbowBarStyle.display = "none";
+            rainbowBarStyle.opacity = 0; 
             gameMultiplier = 1;
             displayMultiplier = gameMultiplier + "x";
             multiplierLocation.innerHTML = displayMultiplier;
@@ -162,6 +178,7 @@ function gameStart() {
     scoreLocation.innerHTML = gameScore;
     gameTime = 300;
     timerLocation.innerHTML = gameTime;
+    scoreTimeDrain = 500;
 
     setPercentage(0);
     resetMultiplier();
@@ -210,7 +227,60 @@ let questions = [
             answer4 = [answerContent = "JavaScript", type="incorrect"]
         ]
     ],
-    
+    question5 = [
+        questionContent = "Choose the correct HTML element for the largest heading:",
+        answers = [
+            answer1 = [answerContent = "< h1 >", type="correct"],
+            answer2 = [answerContent = "< h6 >", type="incorrect"],
+            answer3 = [answerContent = "< header >", type="incorrect"],
+            answer4 = [answerContent = "< heading >", type="incorrect"],
+        ]
+    ],
+    question6 = [
+        questionContent = "How can you open a link in a new tab/browser window?",
+        answers = [
+            answer1 = [answerContent = `< a href="#" target="_blank">`, type="correct"],
+            answer2 = [answerContent = `< a href="#" new-tab >`, type="incorrect"],
+            answer3 = [answerContent = `< a href="#" >`, type="incorrect"],
+            answer4 = [answerContent = `< a href="# target="new_tab" >`, type="incorrect"],
+        ]
+    ],
+    question7 = [
+        questionContent = "What is the correct HTML for referring to an external style sheet?",
+        answers = [
+            answer1 = [answerContent = `< link rel="stylesheet" type="text/css" href="mystyle.css" >`, type="correct"],
+            answer2 = [answerContent = `< link rel="stylesheet" >`, type="incorrect"],
+            answer3 = [answerContent = `< stylesheet add href="style.css" >`, type="incorrect"],
+            answer4 = [answerContent = `< stylesheet href="style.css" >`, type="incorrect"],
+        ]
+    ],
+    question8 = [
+        questionContent = "Which HTML tag is used to define an internal style sheet?",
+        answers = [
+            answer1 = [answerContent = `< style >`, type="correct"],
+            answer2 = [answerContent = `< css >`, type="incorrect"],
+            answer3 = [answerContent = `< script >`, type="incorrect"],
+            answer4 = [answerContent = `< stylesheet >`, type="incorrect"],
+        ]
+    ],
+    question9 = [
+        questionContent = "How do you insert a comment in a CSS file?",
+        answers = [
+            answer1 = [answerContent = `/* Like this */`, type="correct"],
+            answer2 = [answerContent = `< // Like this >`, type="incorrect"],
+            answer3 = [answerContent = `< ** Like this ** >`, type="incorrect"],
+            answer4 = [answerContent = `< // Like this // >`, type="incorrect"],
+        ]
+    ],
+    question10 = [
+        questionContent = "What is the use of an iframe tag?",
+        answers = [
+            answer1 = [answerContent = `To display a website on a website.`, type="correct"],
+            answer2 = [answerContent = `Used for iOS compatibility.`, type="incorrect"],
+            answer3 = [answerContent = `To frame an image within a site.`, type="incorrect"],
+            answer4 = [answerContent = `The tag is non-existant.`, type="incorrect"],
+        ]
+    ],
 ]
  
 function questionShuffle() {
@@ -225,8 +295,22 @@ function nextQuestion() {
             changePercentage(.40);
         }
         currentQuestion += 1;
-        gameScore += (300 * gameMultiplier);
+        document.getElementById("questions-answered").innerHTML = currentQuestion;
+        gameScore += ((300 * gameMultiplier) + scoreTimeDrain);
         scoreLocation.innerHTML = gameScore;
+        scoreTimeDrain = 500;
+        scoreTimeDrainCounter = 500;
+        scoreBonusDrain();
+        function scoreBonusDrain() {
+            if (scoreTimeDrainCounter > 0) {
+                setTimeout(() => {
+                    scoreTimeDrain = scoreTimeDrain - 1;
+                    scoreTimeDrainCounter -= 1;
+                    console.log(scoreTimeDrain);
+                    scoreBonusDrain();
+                }, 20);
+            }
+        }
         randomizedAnswers = questions[currentQuestion][1].sort(function(){return 0.5 - Math.random()});
         titleParagraph.innerHTML = randomizedQuestions[currentQuestion][0];
         answerLocation1.innerHTML = "A. " + questions[currentQuestion][1][0][0];
@@ -240,6 +324,18 @@ function answerSelected(number) {
     if (selectedAnswer[1] === "correct") {
         nextQuestion();
     }
+    else {
+        incorrectAnswerDisplay();
+    }
+}
+
+function incorrectAnswerDisplay() {
+    incorrectBackground.style.opacity = "1";
+    console.log("Changed Opacity.");
+    setTimeout(() => { 
+        incorrectBackground.style.opacity = "0";
+        console.log("Changed Opacity Again.");
+    }, 300);
 }
 
 function startTimer() {
