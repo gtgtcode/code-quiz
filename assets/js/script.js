@@ -2,15 +2,19 @@
 
 //Variable Initializion
 
-let gameTime = 0;
+let gameTime = 300;
 let timerLocation = document.getElementById("timer-display");
 let gameScore = 0;
+let scoreSaveContainer = document.getElementById("save-score-container");
 let scoreLocation = document.getElementById("score-container");
 let titleParagraph = document.getElementById("title-paragraph");
 let incorrectBackground = document.getElementById("incorrect-background");
+let startGameButtonContainer = document.getElementById("start-game-button-container");
+let answerButtonContainer = document.getElementById("answer-option-container");
 let currentQuestion = 0;
 let randomizedQuestions = [];
 let gameMultiplier = 1;
+let timerLength = 300;
 let scoreTimeDrain = 0;
 let scoreTimeDrainCounter = 500;
 let displayMultiplier = gameMultiplier + "x";
@@ -31,7 +35,6 @@ let answerLocation4 = document.getElementById("option-4");
 multBackgroundLocation.style.background =  "linear-gradient(-45deg, #ee7752, #e73c7e)";
 multBackgroundLocation.style.opacity = "0";
 
-console.log(progressBarStyle);
 
 let appendNumber = getComputedStyle(document.documentElement).getPropertyValue("--progress-percentage");
 let percentToNum = parseFloat(appendNumber) / 100.0;
@@ -39,8 +42,11 @@ let outputPercent = percentToNum.toLocaleString("en", {style: "percent"});
 
 rootCSS.style.setProperty('--progress-percentage', outputPercent);
 
+scoreSaveContainer.style.display = "none";
 progressNumber.innerHTML = outputPercent;
 multiplierLocation.innerHTML = displayMultiplier;
+
+let highscoreList = localStorage.getItem("highscores");
 
 var wait = (ms) => {
     const start = Date.now();
@@ -73,7 +79,6 @@ function changePercentage(number) {
         progressBarStyle.opacity = 1;
         rainbowBarStyle.display = "none";
         rainbowBarStyle.opacity = 0; 
-        console.log(progressBarStyle);
         gameMultiplier = 1;
     }
     
@@ -83,7 +88,6 @@ function changePercentage(number) {
         progressBarStyle.opacity = 0;
         rainbowBarStyle.display = "block";
         rainbowBarStyle.opacity = 1;
-        console.log(progressBarStyle);
         setTimeout(3000)
         gameMultiplier = nextMultiplier;
         nextMultiplier += 1;
@@ -114,7 +118,6 @@ function setPercentage(number) {
         nextMultiplier += 1;
         displayMultiplier = gameMultiplier + "x";
         multiplierLocation.innerHTML = displayMultiplier;
-        console.log(displayMultiplier);
         progDrainLoop()
     }
 
@@ -129,7 +132,6 @@ function progDrainLoop() {
 
     setTimeout(function() {
         if (percentToNum < 1) {
-            console.log(progDrainCount)
             progDrainCount = Math.floor((progDrainCount - 0.01) * 100) / 100;
             percentToNum = progDrainCount;
             if (percentToNum == -0.01) {
@@ -139,7 +141,6 @@ function progDrainLoop() {
 
         if (percentToNum == 1) {
             setTimeout(function() {
-                console.log(progDrainCount)
                 progDrainCount = Math.floor((progDrainCount - 0.01) * 100) / 100;
                 percentToNum = progDrainCount;
                 if (percentToNum == -0.01) {
@@ -174,16 +175,41 @@ function resetMultiplier() {
 
 function gameStart() {
     currentQuestion = 0;
+    document.getElementById("questions-answered").innerHTML = currentQuestion;
     gameScore = 0;
     scoreLocation.innerHTML = gameScore;
     gameTime = 300;
+    timerLength = 300;
     timerLocation.innerHTML = gameTime;
     scoreTimeDrain = 500;
+    answerButtonContainer.style.display = "block";
+    startGameButtonContainer.style.display = "none";
+    scoreSaveContainer.style.display = "none";
 
+    function timerLoop() {
+        if (gameTime > 0) {
+            setTimeout(() => {
+                gameTime = gameTime - 1;
+                timerLength -= 1;
+                timerLocation.innerHTML = gameTime;
+                timerLoop();
+            }, 1000);
+        }
+        else {
+            endGame();
+        }
+    }
+
+    timerLoop();
     setPercentage(0);
     resetMultiplier();
     questionShuffle();
-    startTimer();
+    randomizedAnswers = questions[currentQuestion][1].sort(function(){return 0.5 - Math.random()});
+    titleParagraph.innerHTML = randomizedQuestions[currentQuestion][0];
+    answerLocation1.innerHTML = "A. " + questions[currentQuestion][1][0][0];
+    answerLocation2.innerHTML = "B. " + questions[currentQuestion][1][1][0];
+    answerLocation3.innerHTML = "C. " + questions[currentQuestion][1][2][0];
+    answerLocation4.innerHTML = "D. " + questions[currentQuestion][1][3][0];
 }
 
 // Game Questions
@@ -281,42 +307,148 @@ let questions = [
             answer4 = [answerContent = `The tag is non-existant.`, type="incorrect"],
         ]
     ],
+    question11 = [
+        questionContent = "Which tag would you prefix to link to an e-mail?",
+        answers = [
+            answer1 = [answerContent = `mailto:`, type="correct"],
+            answer2 = [answerContent = `e-mail:`, type="incorrect"],
+            answer3 = [answerContent = `mail:`, type="incorrect"],
+            answer4 = [answerContent = `email:`, type="incorrect"],
+        ]
+    ],
+    question12 = [
+        questionContent = "Where is the < .. style='' > tag used?",
+        answers = [
+            answer1 = [answerContent = `In the < body > element.`, type="correct"],
+            answer2 = [answerContent = `There is no < .. style='' > tag`, type="incorrect"],
+            answer3 = [answerContent = `In the < head > element.`, type="incorrect"],
+            answer4 = [answerContent = `In the < script > element.`, type="incorrect"],
+        ]
+    ],
+    question13 = [
+        questionContent = "How do you create an ordered list?",
+        answers = [
+            answer1 = [answerContent = `< ol >`, type="correct"],
+            answer2 = [answerContent = `< ul >`, type="incorrect"],
+            answer3 = [answerContent = `< order >`, type="incorrect"],
+            answer4 = [answerContent = `< list type='ordered' >`, type="incorrect"],
+        ]
+    ],
+    question14 = [
+        questionContent = "How do you refer to an id in CSS (Ex. id='question-content')?",
+        answers = [
+            answer1 = [answerContent = `#question-content`, type="correct"],
+            answer2 = [answerContent = `.question-content`, type="incorrect"],
+            answer3 = [answerContent = `#questionContent`, type="incorrect"],
+            answer4 = [answerContent = `question-content`, type="incorrect"],
+        ]
+    ],
+    question15 = [
+        questionContent = "Which property do you need to change the background color?",
+        answers = [
+            answer1 = [answerContent = `background-color`, type="correct"],
+            answer2 = [answerContent = `bg-color`, type="incorrect"],
+            answer3 = [answerContent = `color`, type="incorrect"],
+            answer4 = [answerContent = `colorbg`, type="incorrect"],
+        ]
+    ],
+    question16 = [
+        questionContent = "Which property controls the size of a text?",
+        answers = [
+            answer1 = [answerContent = `font-size`, type="correct"],
+            answer2 = [answerContent = `text-size`, type="incorrect"],
+            answer3 = [answerContent = `text-scale`, type="incorrect"],
+            answer4 = [answerContent = `text-width`, type="incorrect"],
+        ]
+    ],
+    question17 = [
+        questionContent = "How can you change the bottom margin of an element?",
+        answers = [
+            answer1 = [answerContent = `margin-bottom`, type="correct"],
+            answer2 = [answerContent = `margin-down`, type="incorrect"],
+            answer3 = [answerContent = `margin`, type="incorrect"],
+            answer4 = [answerContent = `margin-below`, type="incorrect"],
+        ]
+    ],
+    question18 = [
+        questionContent = "Which of the following events occurs when the user clicks on an HTML element?",
+        answers = [
+            answer1 = [answerContent = `onclick`, type="correct"],
+            answer2 = [answerContent = `onmouse`, type="incorrect"],
+            answer3 = [answerContent = `on-mb-left`, type="incorrect"],
+            answer4 = [answerContent = `ontap`, type="incorrect"],
+        ]
+    ],
+    question19 = [
+        questionContent = "How do you make a JavaScript function?",
+        answers = [
+            answer1 = [answerContent = `function newFunction() {}`, type="correct"],
+            answer2 = [answerContent = `function = new.Function() {}`, type="incorrect"],
+            answer3 = [answerContent = `function.NewFunction() {}`, type="incorrect"],
+            answer4 = [answerContent = `function:newFunction() {}`, type="incorrect"],
+        ]
+    ],
+    question20 = [
+        questionContent = "How do you make a JavaScript array?",
+        answers = [
+            answer1 = [answerContent = `let array = [x, y, z];`, type="correct"],
+            answer2 = [answerContent = `let array = x, y, z;`, type="incorrect"],
+            answer3 = [answerContent = `let array = x + y + z;`, type="incorrect"],
+            answer4 = [answerContent = `let array = 0.x, 1.y, 2.z;`, type="incorrect"],
+        ]
+    ],
 ]
  
 function questionShuffle() {
     randomizedQuestions = questions.sort(function(){return 0.5 - Math.random()});
     randomizedAnswers = questions[currentQuestion][1].sort(function(){return 0.5 - Math.random()});
-    console.log(randomizedQuestions);
     titleParagraph.innerHTML = randomizedQuestions[currentQuestion][0];
 }
 
 function nextQuestion() {
-        if (multBackgroundLocation.style.opacity == "0") {
-            changePercentage(.40);
-        }
         currentQuestion += 1;
-        document.getElementById("questions-answered").innerHTML = currentQuestion;
-        gameScore += ((300 * gameMultiplier) + scoreTimeDrain);
-        scoreLocation.innerHTML = gameScore;
-        scoreTimeDrain = 500;
-        scoreTimeDrainCounter = 500;
-        scoreBonusDrain();
-        function scoreBonusDrain() {
-            if (scoreTimeDrainCounter > 0) {
-                setTimeout(() => {
-                    scoreTimeDrain = scoreTimeDrain - 1;
-                    scoreTimeDrainCounter -= 1;
-                    console.log(scoreTimeDrain);
-                    scoreBonusDrain();
-                }, 20);
+        if (currentQuestion < 20) {
+            if (multBackgroundLocation.style.opacity == "0") {
+                changePercentage(.40);
             }
+            
+            document.getElementById("questions-answered").innerHTML = currentQuestion;
+            gameScore += ((300 * gameMultiplier) + scoreTimeDrain);
+            scoreLocation.innerHTML = gameScore;
+            scoreTimeDrain = 500;
+            scoreTimeDrainCounter = 500;
+            scoreBonusDrain();
+            function scoreBonusDrain() {
+                if (scoreTimeDrainCounter > 0) {
+                    setTimeout(() => {
+                        scoreTimeDrain = scoreTimeDrain - 1;
+                        scoreTimeDrainCounter -= 1;
+                        scoreBonusDrain();
+                    }, 20);
+                }
+            }
+            randomizedAnswers = questions[currentQuestion][1].sort(function(){return 0.5 - Math.random()});
+            titleParagraph.innerHTML = randomizedQuestions[currentQuestion][0];
+            answerLocation1.innerHTML = "A. " + questions[currentQuestion][1][0][0];
+            answerLocation2.innerHTML = "B. " + questions[currentQuestion][1][1][0];
+            answerLocation3.innerHTML = "C. " + questions[currentQuestion][1][2][0];
+            answerLocation4.innerHTML = "D. " + questions[currentQuestion][1][3][0];
         }
-        randomizedAnswers = questions[currentQuestion][1].sort(function(){return 0.5 - Math.random()});
-        titleParagraph.innerHTML = randomizedQuestions[currentQuestion][0];
-        answerLocation1.innerHTML = "A. " + questions[currentQuestion][1][0][0];
-        answerLocation2.innerHTML = "B. " + questions[currentQuestion][1][1][0];
-        answerLocation3.innerHTML = "C. " + questions[currentQuestion][1][2][0];
-        answerLocation4.innerHTML = "D. " + questions[currentQuestion][1][3][0];
+        else {
+            endGame();
+        }
+}
+
+function endGame() {
+    currentQuestion = 20;
+    document.getElementById("questions-answered").innerHTML = currentQuestion;
+    titleParagraph.innerHTML = `Good Job! Your final score was ${gameScore}! Would you like to play again?`;
+    document.getElementById("final-score-display").innerHTML = `Final Score: ${gameScore}`;
+    answerButtonContainer.style.display = "none";
+    startGameButtonContainer.style.display = "block";
+    scoreSaveContainer.style.display = "block";
+    gameTime = 1;
+    console.log("game ended");
 }
 
 function answerSelected(number) {
@@ -331,33 +463,26 @@ function answerSelected(number) {
 
 function incorrectAnswerDisplay() {
     incorrectBackground.style.opacity = "1";
-    console.log("Changed Opacity.");
+    gameScore -= 500;
+    gameTime -= 50;
+    scoreLocation.innerHTML = gameScore;
     setTimeout(() => { 
         incorrectBackground.style.opacity = "0";
-        console.log("Changed Opacity Again.");
     }, 300);
 }
 
-function startTimer() {
-        gameTime = gameTime - 1;
-        timerLocation.innerHTML = gameTime;
-        setTimeout(1000);
-
-        if (gameTime > 0) {
-            startTimer();
-        }
+function storeScore(name, score) {
+    parsedScores = JSON.parse(highscoreList);
+    parsedScores.push([name]);
+    parsedScores.push([score]);
+    localStorage.setItem(parsedScores.string)
 }
-
-questionShuffle();
-
-gameStart();
 
 answerLocation1.innerHTML = "A. " + questions[currentQuestion][1][0][0];
 answerLocation2.innerHTML = "B. " + questions[currentQuestion][1][1][0];
 answerLocation3.innerHTML = "C. " + questions[currentQuestion][1][2][0];
 answerLocation4.innerHTML = "D. " + questions[currentQuestion][1][3][0];
 
-console.log(outputPercent);
 
 
 

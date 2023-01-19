@@ -89,16 +89,16 @@
                         Multiplier
                      </div>
                 </button>
-                <button id="question-button" style="position: relative;">
-                    <div id="question-count-container">
-                        <div id="questions-answered">0</div>
-                        <div>/</div>
-                        <div id="question-total">10</div>
-                    </div>
-                    <div id="question-hover" class="hover-icon">
-                        Questions
-                    </div>
-            </button>
+                <button id="question-button">
+                        <div id="question-count-container">
+                            <div id="questions-answered">0</div>
+                            <div>/</div>
+                            <div id="question-total">20</div>
+                        </div>
+                        <div id="question-hover" class="hover-icon">
+                            Questions
+                        </div>
+                </button>
             </div>
         </section>
         <section class="container" id="quiz-container">
@@ -106,16 +106,25 @@
                 <h1 class="text-center" id="quiz-header">Coding Quiz</h1>
             </div>
             <div id="quiz-content">
-                <p class="text-center mt-5" id="title-paragraph">Think you've got what it takes to be a master programmer? Take this quiz to find out!</p>
-                <button onclick="resetMultiplier()">Reset Multiplier</button>
-                <button onclick="changePercentage(.01)">+1</button>
-                <button onclick="changePercentage(-.40)">-40%</button>
-                <button onclick="changePercentage(.40)">+40%</button>
-                <button onclick="setPercentage(1)">100%</button>
-                <button class="answer-option" id="option-1" onclick="answerSelected(0)"></button>
-                <button class="answer-option" id="option-2" onclick="answerSelected(1)"></button>
-                <button class="answer-option" id="option-3" onclick="answerSelected(2)"></button>
-                <button class="answer-option" id="option-4" onclick="answerSelected(3)"></button>
+                <p class="text-center mt-4" id="title-paragraph">Think you've got what it takes to be a master programmer? Take this quiz to find out!</p>
+                <div id="save-score-container">
+                    <p style="text-align: center;">I want to save my score!</h1>
+                    <div id="score-save-form">
+                        <input type="text" placeholder="Name" id="score-save-input">
+                        <div class="mobile-break"><br></div>
+                        <p id="final-score-display">Final Score: </p>
+                        <button id="save-score-submit" onclick="storeScore(document.getElementById('score-save-input').value, gameScore);">Submit</button>
+                    </div>
+                </div>
+                <div id="start-game-button-container">
+                    <button id="start-button" onclick="gameStart();">Start the Game</button>
+                </div>
+                <div id="answer-option-container">
+                    <button class="answer-option" id="option-1" onclick="answerSelected(0)"></button>
+                    <button class="answer-option" id="option-2" onclick="answerSelected(1)"></button>
+                    <button class="answer-option" id="option-3" onclick="answerSelected(2)"></button>
+                    <button class="answer-option" id="option-4" onclick="answerSelected(3)"></button>
+                </div>
             </div>
             <div id="quiz-container-footer">
                     <a

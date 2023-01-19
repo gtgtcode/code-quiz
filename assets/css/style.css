@@ -193,6 +193,7 @@ body {
 
 #question-button {
     float: right !important;
+    position: relative;
 }
 
 .hover-icon {
@@ -210,6 +211,38 @@ body {
 .answer-option {
     display: block;
     border: none;
+    margin-top: 20px;
+    text-align: left;
+    padding: 10px;
+    border-radius: 20px;
+    background-color: rgba(255,255,255,0.7);
+}
+
+#start-game-button-container {
+    width: 100%;
+}
+
+#answer-option-container {
+    display: none;
+}
+
+#save-score-container {
+    margin: auto;
+    display: block;
+    border: none;
+    text-align: center;
+    margin-top: 20px;
+    text-align: left;
+    padding: 10px;
+    border-radius: 20px;
+    background-color: rgba(255,255,255,0.7);
+}
+
+#start-button {
+    margin: auto;
+    display: block;
+    border: none;
+    text-align: center;
     margin-top: 20px;
     text-align: left;
     padding: 10px;
@@ -254,3 +287,80 @@ body {
     background-color: rgba(255,255,255,0.5);
     border-radius: 20px;
 }
+
+.mobile-break {
+    display: none;
+}
+
+#save-score-submit {
+    margin: auto;
+    display: block;
+    border: none;
+    text-align: center;
+    margin-top: 20px;
+    text-align: left;
+    padding: 10px;
+    border-radius: 20px;
+    background-color: rgba(255,255,255,0.7);
+}
+
+#final-score-display {
+    margin: auto;
+    display: block;
+    border: none;
+    text-align: center;
+    margin-top: 20px;
+    text-align: left;
+    padding: 10px;
+    border-radius: 20px;
+    background-color: rgba(255,255,255,0.7);
+    text-align: center;
+}
+
+input {
+    position: relative;
+    left: 50%;
+    transform: translate(-50%);
+}
+
+@media screen and (max-width: 480px) {
+    body {
+        font-size: 14px !important;
+    }
+
+    .mobile-break {
+        display: block;
+    }
+
+    #question-button {
+        float: left !important;
+        position: relative;
+    }
+
+    #progress-container {
+        height: 140px;
+    }
+
+    #game-container {
+        margin-top: 50px;
+    }
+  }
+
+  @media screen and (max-width: 280px) {
+    body {
+        font-size: 10px !important;
+    }
+
+    #question-button {
+        float: left !important;
+        position: relative;
+    }
+
+    #progress-container {
+        height: 140px;
+    }
+
+    #game-container {
+        margin-top: 50px;
+    }
+  }
