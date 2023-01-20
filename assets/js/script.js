@@ -461,6 +461,61 @@ function answerSelected(number) {
     }
 }
 
+function displayLeaderboard() {
+    if (document.getElementById("leaderboard-menu") == null) {
+        leaderboardMenu = document.createElement("div");
+        leaderboardMenu.setAttribute("id", "leaderboard-menu");
+        leaderboardMenu.innerHTML = `
+        <p style="text-align: center;margin-top: 10px;">Leaderboard</p>
+        <button onclick="closeLeaderboard();" style="padding: 0;border: none;background: none;position: absolute;right: 20px;top: 20px;"><span class="material-symbols-outlined">
+        close
+        </span></button>
+        <div id="highscore-container" style="padding: 20px;position: absolute; left: 50%; transform: translate(-50%); width: 300px; height: 400px; background: rgba(154, 169, 197, 0.2); border-radius: 20px; overflow:auto;"></div>
+        `;
+        document.body.appendChild(leaderboardMenu);
+        if (localStorage.getItem("playerScores") !== null) {
+            parsedScoresCont = JSON.parse("["+localStorage.getItem("playerScores")+"]");
+            outputParse = [parsedScoresCont];
+            for (i = 0; i < outputParse[0].length; i++) {
+                console.log(document.getElementById("highscore-container"));
+                document.getElementById("highscore-container").innerHTML = document.getElementById("highscore-container").innerHTML + `
+                <div id="lb-score-container">
+                    ${outputParse[0][i][0]}
+                    <p style="float: right;">${outputParse[0][i][1]}</p>
+                </div>
+                `;
+            }
+        }
+    }
+}
+
+function closeLeaderboard() {
+    document.getElementById("leaderboard-menu").remove();
+}
+
+function displayInformation() {
+    if (document.getElementById("information-menu") == null) {
+    informationMenu = document.createElement("div");
+    informationMenu.setAttribute("id", "information-menu");
+    informationMenu.innerHTML = informationMenu.innerHTML + `
+    <p style="text-align: center;margin-top: 10px;">Information</p>
+    <button onclick="closeInformation();" style="padding: 0;border: none;background: none;position: absolute;right: 20px;top: 20px;"><span class="material-symbols-outlined">
+        close
+    </span></button>
+    <p>The quiz is best played when you are trying to raise your "multiplier". Your multiplier directly influences the score you receive after answering a question correctly, doubling it, or sometimes even tripling or quadrupling it!<br><br>
+
+    Once you answer a certain amount of questions, you will enter a "flow state". When you are in this state, your multiplier is raised and the quiz background changes colors. The bar and percentage at the top of your screen indicate your flow state percentage. When it is full, it will drain over time but your multiplier will be raised. Each time the bar is filled, your multiplier will go up by one. When the bar is empty, your multiplier will return to one.<br><br>
+    
+    Be careful with getting questions wrong! If you do, your screen will flicker red and you will lose score and time! If you run out of time, you will get a game over!</p>
+    `;
+    document.body.appendChild(informationMenu);
+    }
+}
+
+function closeInformation() {
+    document.getElementById("information-menu").remove();
+}
+
 function incorrectAnswerDisplay() {
     incorrectBackground.style.opacity = "1";
     gameScore -= 500;
@@ -472,10 +527,37 @@ function incorrectAnswerDisplay() {
 }
 
 function storeScore(name, score) {
-    parsedScores = JSON.parse(highscoreList);
-    parsedScores.push([name]);
-    parsedScores.push([score]);
-    localStorage.setItem(parsedScores.string)
+    if (localStorage.getItem("playerScores") !== null) {
+        parsedScores = localStorage.getItem("playerScores");
+    }
+    else {
+        parsedScores = "";
+    }
+    console.log(parsedScores);
+    if (parsedScores !== "") {
+        parsedScores = parsedScores + `, ["${name}", ${score}]`;
+    }
+    else {
+        parsedScores = `["${name}", ${score}]`;
+    }
+
+    localStorage.setItem("playerScores", parsedScores);
+    console.log("["+localStorage.getItem("playerScores")+"]");
+
+    confirmationBox = document.createElement("div");
+    confirmationBox.innerHTML = `
+    <div id="confirmation-box">
+        <p>Your score has been saved.</p>
+    </div>`;
+    document.body.appendChild(confirmationBox);
+    setTimeout(() => {
+    confirmationBox.innerHTML = `
+    <div id="confirmation-box" style="opacity: 0;">
+        <p>Your score has been saved.</p>
+    </div>`;}, 1500);
+    setTimeout(() => {
+    confirmationBox.remove();
+    }, 1600);
 }
 
 answerLocation1.innerHTML = "A. " + questions[currentQuestion][1][0][0];
